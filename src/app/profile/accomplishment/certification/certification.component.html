@@ -1,0 +1,136 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<div id="accomplishment" class="alert ">
+  <h3>Accomplishment</h3>
+  <div class="card">
+
+    <h3 class="card-header">Certification
+      <a data-toggle="collapse" href="#bodyCerti" class="btn pull-right">
+         <span class="glyphicon glyphicon-th-list"></span>
+      </a>
+      <span *ngIf="this.auth.getUser() == userData[0].userName"><a href="#myModalCerti" class="btn btn-default btn-sm" class="btn pull-right" data-toggle="modal">
+          <span class="glyphicon glyphicon-plus" ></span></a>
+      </span>
+    </h3>
+
+    <!--   ***********************Certification********************* -->
+    <div id="certification" id="bodyCerti" class="card-body" class="collapse">
+      <div id="cername">
+        <div class="modal fade" id="myModaleditCert" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+          
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header" style="padding:35px 50px;">
+
+                <h2 class="modal-title"><b>Update Certification</b>
+
+                </h2>
+
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Name</label>
+                      <input type="text" class="form-control" name="certiname" [(ngModel)]='certificationName' #CertificationName='ngModel'>
+                    </h4>
+                  </div>
+
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Issued By</label>
+                      <input type="text" class="form-control" name="issby" [(ngModel)]='issuedBy' #IssuedBy='ngModel'>
+                    </h4>
+                  </div>
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Year</label>
+                      <input type="number" class="form-control" name="tperiod" [(ngModel)]='year' #Year='ngModel'>
+                    </h4>
+                  </div>
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="updateCertificationDatabase(CertificationName.value,IssuedBy.value,Year.value)">Save Changes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <br>
+        <div *ngIf="userData.length">
+          <div *ngFor="let data of userData[0].profile.accomplishment.certifications.reverse()">
+            <span><h4>Name :  {{data.name}} </h4></span>
+            <div>
+              <span class="move-button-left"><button *ngIf="this.auth.getUser() == userData[0].userName" class="btn btn-default btn-sm" class="btn pull-right" (click)=removeCertification(data.certificateId)>
+                <span class="glyphicon glyphicon-trash"> </span>
+              </button>
+                 </span>
+
+              <span>
+                        <button type="button" *ngIf="this.auth.getUser() == userData[0].userName" class="btn btn-default btn-sm" class="btn pull-right" data-target="#myModaleditCert" data-toggle="modal" (click)="updateCertification(data.certificateId)">
+          <span class="glyphicon glyphicon-pencil"> </span>
+              </button>
+              </span>
+
+            </div>
+            <span><h4>Issued By :  {{data.issuedBy}} </h4></span>
+            <span><h4>Year of Certification :  {{data.year}}</h4></span>
+            <hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModalCerti" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+
+           <h2 class="modal-title"><b>Add Certification</b>
+
+                </h2>
+        </div>
+      <div class="modal-body">
+        <form #certificationForm="ngForm">
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Name</label>
+                      <input type="text" class="form-control" name="certiname1" value="" [(ngModel)]='certificationName1' #CertificationName1='ngModel'>
+                    </h4>
+                  </div>
+
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Issued By</label>
+                      <input type="text" class="form-control" name="issby1" value="" [(ngModel)]='issuedBy1' #IssuedBy1='ngModel'>
+                    </h4>
+                  </div>
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Year</label>
+                      <input type="number" class="form-control" name="year1" value="" [(ngModel)]='year1' #Year1='ngModel'>
+                    </h4>
+                  </div>
+                </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="addCertificationDatabase(certificationForm,CertificationName1.value,IssuedBy1.value,Year1.value)">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+               </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,137 @@
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<div id="accomplishment" class="alert ">
+    <div id="awards">
+        <div class="card">
+            <h3 class="card-header">
+                Awards
+                <a data-toggle="collapse" href="#bodyAward" class="btn pull-right">
+         <span class="glyphicon glyphicon-th-list"></span>
+      </a>
+                <span *ngIf="this.auth.getUser() == userData[0].userName"><a href="#myModalAward" class="btn btn-default btn-sm" class="btn pull-right" data-toggle="modal">
+          <span class="glyphicon glyphicon-plus" ></span></a>
+                </span>
+            </h3>
+            <div id="bodyAward" class="card-body" class="collapse">
+                <div id="awardname">
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="myModaleditAward" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header" style="padding:35px 50px;">
+
+                                    <h2 class="modal-title"><b>Update Award</b>
+
+                                    </h2>
+
+                                </div>
+                                <div class="modal-body">
+                                    <form>
+                                        <div class="form-group">
+                                            <h4>
+                                                <label for="recipient-name" class="form-control-label">Name</label>
+                                                <input type="text" class="form-control" name="awarname" [(ngModel)]='awardName' #AwardName='ngModel'>
+                                            </h4>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <h4>
+                                                <label for="recipient-name" class="form-control-label">Awarded By</label>
+                                                <input type="text" class="form-control" name="awardbyname" [(ngModel)]='awardedBy' #AwardedBy='ngModel'>
+                                            </h4>
+                                        </div>
+                                        <div class="form-group">
+                                            <h4>
+                                                <label for="recipient-name" class="form-control-label">Year</label>
+                                                <input type="number" class="form-control" name="yearname" [(ngModel)]='year' #Year='ngModel'>
+                                            </h4>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="updateAwardsDatabase(AwardName.value,AwardedBy.value,Year.value)">Save Changes</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><br>
+                    <div *ngIf="userData.length">
+                        <div *ngFor="let data of userData[0].profile.accomplishment.awards.reverse()">
+                            <span><h4>Name :  {{data.name}}</h4> 
+                            <div>
+                                <span class="move-button-left">
+                        <button class="btn btn-danger btn-sm" class="btn pull-right" data-toggle="modal" *ngIf="this.auth.getUser() == userData[0].userName" (click)="removeAwards(data.awardId)">
+                             <span class="glyphicon glyphicon-trash" ></span></button>&nbsp;</span>
+                            <span>
+                        <button type="button" *ngIf="this.auth.getUser() == userData[0].userName" class="btn btn-default btn-sm" class="btn pull-right" data-toggle="modal" data-target="#myModaleditAward" (click)="updateAwards(data.awardId)">
+          <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            </span>
+                        </div>
+                        </span>
+                        <span><h4>Awarded By :  {{data.awardedBy}} </h4></span>
+                        <span><h4>Year :  {{data.year}} </h4></span>
+                        <hr/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<div class="modal fade" id="myModalAward" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header" style="padding:35px 50px;">
+
+                <h2 class="modal-title"><b>Add Award</b>
+                </h2>
+            </div>
+            <div class="modal-body">
+                <form #Awards="ngForm">
+                    <div class="form-group">
+                        <h4>
+                            <label for="recipient-name" class="form-control-label">Name</label>
+                            <input type="text" class="form-control" name="AwardName1" value="" required ngModel [(ngModel)]='awardName1' #AwardName1='ngModel'>
+                            <div class="alert alert-danger" *ngIf="AwardName1.touched && AwardName1.invalid">Award Name is required !!</div>
+                        </h4>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>
+                            <label for="recipient-name" class="form-control-label">Awarded By</label>
+                            <input type="text" class="form-control" name="AwardedBy1" value="" required ngModel [(ngModel)]='awardedBy1' #AwardedBy1='ngModel'>
+                            <div class="alert alert-danger" *ngIf="AwardedBy1.touched && AwardedBy1.invalid">AwardedBy is required !!</div>
+                        </h4>
+                    </div>
+                    <div class="form-group">
+                        <h4>
+                            <label for="recipient-name" class="form-control-label">Year</label>
+                            <input type="number" class="form-control" name="Year1" value="" required ngModel [(ngModel)]='year1' #Year1='ngModel'>
+                            <div class="alert alert-danger" *ngIf="Year1.touched && Year1.invalid">Year is required !!</div>
+                        </h4>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="addAwardsDatabase(Awards,AwardName1.value,AwardedBy1.value,Year1.value)">Save</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+
+    </div>
+</div>

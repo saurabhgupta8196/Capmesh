@@ -1,0 +1,76 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<div class="alert ">
+  <div id="skills">
+    <h3>Skills
+      <span *ngIf="this.auth.getUser() == userData[0].userName"><a href="#myModalSkill" class="btn btn-default btn-sm" class="btn pull-right" data-toggle="modal">
+          <span class="glyphicon glyphicon-plus" ></span></a>
+      </span>
+    </h3>
+    <div class="card">
+      <div id="skills" class="card-body">
+        <div id="skillname">
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModalSkill" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <!--<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog"> -->
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header" style="padding:35px 50px;">
+
+                  <h2 class="modal-title"><b>Add Skills</b>
+
+                  </h2>
+
+                </div>
+                <div class="modal-body">
+                  <form #skill="ngForm">
+                    <div class="form-group">
+                      <h4>
+                        <label for="recipient-name" class="form-control-label">Add Skills</label>
+                        <input type="text" class="form-control" name="sname" [(ngModel)]='skillName' #SkillName='ngModel'>
+                      </h4>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="addskillDatabase(skill,SkillName.value)">Save</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+
+              </div>
+
+            </div>
+          </div>
+          <div *ngIf="userData.length">
+            <div *ngFor="let data of userData[0].profile.skills">
+              <span><h4>{{data}}</h4>
+            
+              <button class="btn btn-default btn-sm btn pull-right" *ngIf="this.auth.getUser() == userData[0].userName" (click)="removeSkills(data)">
+                <span class="glyphicon glyphicon-trash"></span></button>
+
+              </span>
+              <hr/>
+            </div>
+
+          </div>
+
+          <!--<div id="endorsement">
+          <span>Endorsed By</span><br>
+          <span>Comment</span><br>
+        </div>-->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

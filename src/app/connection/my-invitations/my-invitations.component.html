@@ -1,0 +1,24 @@
+<div class="container">
+    <div class="well block1">
+        <div class="row pull-right">
+            <button routerLinkActive='active' class="btn btn-info"><a href="http://10.102.55.73:4200/my-networks">Go Back</a></button>
+        </div>
+        <div class="row">
+            <div class="head-font center">
+                <h1> Your Invitations </h1>
+                <hr/>
+            </div>
+            <div class="col-lg-4">
+                <button [routerLink]="['sent']" routerLinkActive='active' class="btn btn-info btn-block">Sent</button>
+            </div>
+            <div class="col-lg-4">
+                <button [routerLink]="['received']" routerLinkActive='active' class="btn btn-info btn-block">Received</button>
+            </div>
+            <div class="col-lg-4">
+                <button [routerLink]="['block-list']" routerLinkActive='active' class="btn btn-info btn-block">Block List</button>
+            </div>
+        </div>
+        <hr/>
+        <router-outlet></router-outlet>
+    </div>
+</div>

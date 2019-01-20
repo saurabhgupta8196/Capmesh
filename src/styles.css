@@ -1,0 +1,30 @@
+.container{
+    margin: 20px;
+}
+
+div.block{
+    display: inline-block;
+}
+
+.head-font{
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.center{
+    text-align: center
+}
+
+.active{
+    font-weight: bolder
+}
+
+.list{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.center-button{
+    position: relative;
+    margin-top: 20px;
+}

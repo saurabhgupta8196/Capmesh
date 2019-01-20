@@ -1,0 +1,28 @@
+<div class="list">
+  <h3>Blocked Users ( {{blockListCount}} )</h3>
+  <div style="position:relative;margin-left:200">
+    <ngx-spinner bdColor="rgba(51,51,51,0.0)" size="default" color="black" type="line-scale-pulse-out">
+    </ngx-spinner>
+  </div>
+  <div *ngIf="blockListCount==0" style="height:232px">
+    <h3 class="center" style="position:relative;padding-top:90px">{{msg}}</h3>
+  </div>
+  <div>
+    <ul class="list-group">
+      <li *ngFor="let c of blockList" class="list-group-item">
+        <div class="row">
+          <div class="col-lg-2">
+            <img [src]='c?.profile' class="img-circle" alt="Profile Image" width="100" height="100" />
+          </div>
+          <div class="col-lg-6 ">
+            <h3>{{c?._id}}</h3>
+            <p>{{c?.name}}</p>
+          </div>
+          <div class="col-lg-2 pull-right">
+            <button class="btn btn-success center-button" (click)='unblockConnection(c?._id)'>Unblock</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,147 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<div id="accomplishment" class="alert ">
+  <div id="publication">
+    <div class="card">
+
+      <h3 class="card-header">Publication
+        <a data-toggle="collapse" href="#bodyPublic" class="btn pull-right">
+         <span class="glyphicon glyphicon-th-list"></span>
+      </a>
+        <span *ngIf="this.auth.getUser() == userData[0].userName"><a href="#myModalPublic" class="btn btn-default btn-sm" class="btn pull-right" data-toggle="modal">
+          <span class="glyphicon glyphicon-plus" ></span></a>
+        </span>
+      </h3>
+      <div id="publication" id="bodyPublic" class="card-body" class="collapse">
+        <div id="pubname">
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModaleditPubli" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header" style="padding:35px 50px;">
+
+                  <h2 class="modal-title"><b>Update Publication</b>
+
+                  </h2>
+
+                </div>
+                <div class="modal-body">
+                  <form>
+                    <div class="form-group">
+                      <h4>
+                        <label for="recipient-name" class="form-control-label">Name</label>
+                        <input type="text" class="form-control" name="pubName" [(ngModel)]='publicationName' #PublicationName='ngModel'>
+                      </h4>
+                    </div>
+
+                    <div class="form-group">
+                      <h4>
+                        <label for="recipient-name" class="form-control-label">Topic</label>
+                        <input type="text" class="form-control" name="pubTopic" [(ngModel)]='publicationTopic' #PublicationTopic='ngModel'>
+                      </h4>
+                    </div>
+                    <div class="form-group">
+                      <h4>
+                        <label for="recipient-name" class="form-control-label">Published By</label>
+                        <input type="text" class="form-control" name="pubBy" [(ngModel)]='publishedBy' #PublishedBy='ngModel'>
+                      </h4>
+                    </div>
+                    <div class="form-group">
+                      <h4>
+                        <label for="recipient-name" class="form-control-label">Year</label>
+                        <input type="number" class="form-control" name="pubyear" [(ngModel)]='year' #Year='ngModel'>
+                      </h4>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="updatePublicationDatabase(PublicationName.value,PublicationTopic.value,PublishedBy.value,Year.value)">Save Changes</button>
+                  <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+
+            </div>
+          </div><br>
+          <div *ngIf="userData.length">
+            <div *ngFor="let data of userData[0].profile.accomplishment.publications.reverse()">
+              <span><h4>Name :  {{data.name}}</h4></span>
+              <div>
+                <span><button *ngIf="this.auth.getUser() == userData[0].userName" type="button" class="btn btn-default btn-sm" class="btn pull-right" (click)=removePublication(data.publicationId)>  <span class="glyphicon glyphicon-trash"> </span></button>
+                </span>
+                <span>
+          <button type="button" *ngIf="this.auth.getUser() == userData[0].userName" class="btn btn-default btn-sm" class="btn pull-right" data-target="#myModaleditPubli" data-toggle="modal" (click)="updatePublication(data.publicationId)">
+          <span class="glyphicon glyphicon-pencil"></span>
+                </button>
+                </span>
+
+              </div>
+              <span><h4>Topic :  {{data.topic}}</h4></span>
+              <span><h4>Published By : {{data.publishedBy}}</h4></span>
+              <span><h4>Year : {{data.year}}</h4></span>
+              <hr/>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="myModalPublic" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header" style="padding:35px 50px;">
+
+        <h2 class="modal-title"><b>Add Publication</b>
+
+        </h2>
+
+      </div>
+      <div class="modal-body">
+        <form #publication="ngForm">
+          <div class="form-group">
+            <h4>
+              <label for="recipient-name" class="form-control-label">Name</label>
+              <input type="text" class="form-control" name="pubName1" [(ngModel)]='publicationName1' #PublicationName1='ngModel'>
+            </h4>
+          </div>
+
+          <div class="form-group">
+            <h4>
+              <label for="recipient-name" class="form-control-label">Topic</label>
+              <input type="text" class="form-control" name="pubTopic1" [(ngModel)]='publicationTopic1' #PublicationTopic1='ngModel'>
+            </h4>
+          </div>
+          <div class="form-group">
+            <h4>
+              <label for="recipient-name" class="form-control-label">Published By</label>
+              <input type="text" class="form-control" name="pubBy1" [(ngModel)]='publishedBy1' #PublishedBy1='ngModel'>
+            </h4>
+          </div>
+          <div class="form-group">
+            <h4>
+              <label for="recipient-name" class="form-control-label">Year</label>
+              <input type="number" class="form-control" name="pubyear1" [(ngModel)]='year1' #Year1='ngModel'>
+            </h4>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="addPublicationDatabase(publication,PublicationName1.value,PublicationTopic1.value,PublishedBy1.value,Year1.value)">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>

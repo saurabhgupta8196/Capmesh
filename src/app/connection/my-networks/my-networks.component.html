@@ -1,0 +1,50 @@
+<div class="container">
+  <div class="row">
+    <div class="block col-lg-3 head-font center">
+      <div class="well">
+        <span>Your Connections</span>
+        <hr/>
+        <img src='../assets/abc.jpg' class="img-circle" alt="Profile Image" width="100" height="100" />
+        <div>
+          <h1> {{connectionsCount}} </h1>
+          <a [routerLink]="['my-connections']" routerLinkActive='active'>See All</a>
+          <hr/>
+        </div>
+      </div>
+    </div>
+    <!--<div class="col-lg-1"></div>-->
+    <div class="block col-lg-9" style="position:relative;padding-left:5px">
+      <div class="well">
+        <div class=" head-font center">
+          Your Invitations ( {{invitationsReceivedCount}} <i style="font-size:10px">Received</i> )
+          <a [routerLink]="['my-invitations']" routerLinkActive='active' class="pull-right">Manage All</a>
+          <hr/>
+        </div>
+        <ngx-spinner bdColor="rgba(51,51,51,0)" size="default" color="black" type="line-scale-pulse-out">
+        </ngx-spinner>
+        <div *ngIf="invitationsReceivedCount==0" style="height:232px">
+          <h3 class="center" style="position:relative;padding-top:90px">{{msg}}</h3>
+        </div>
+        <div *ngIf="invitationsReceivedCount!=0">
+          <ul class="list-group">
+            <li *ngFor="let c of invitationsReceived" class="list-group-item">
+              <div class="row">
+                <div class="col-lg-2">
+                  <img [src]='c?.profile' class="img-circle" alt="Profile Image" width="100" height="100" />
+                </div>
+                <div class="col-lg-6">
+                  <h3>{{c?._id}}</h3>
+                  <p>{{c?.name}}</p>
+                </div>
+                <div class="col-lg-4 pull-right">
+                  <button class="btn btn-success center-button" (click)='acceptInvitation(c?._id)'>Accept</button>&nbsp;
+                  <button class="btn btn-danger center-button" (click)='ignoreInvitation(c?._id)'>Ignore</button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

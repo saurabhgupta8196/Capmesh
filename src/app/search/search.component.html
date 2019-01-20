@@ -1,0 +1,40 @@
+<form class="form-inline">
+  <div class="input-group">
+    <input type="text" placeholder="Enter to search" class="form-control" [(ngModel)]="query" name="query" autocomplete="off"
+    />
+
+    <div class="input-group-btn">
+      <button class="btn btn-primary" (click)="search()" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-search"></i>
+      </button>
+    <!--  <ul *ngIf="result" class="dropdown-menu " id="searchresult" style="right:-2cm;left:-5cm;" >
+        <li>
+          No Result Found!
+        </li>
+      </ul>-->
+      <ul class="dropdown-menu" id="searchresult" style="right:-2cm;left:-5cm;" >
+          <ng-template [ngIf]='!flag'>
+              <li>
+                 &nbsp;No Result Found!
+              </li>
+       </ng-template>
+      <ng-template [ngIf]="flag">
+          
+              <li *ngFor="let r of result, let i = index">
+                
+                <span *ngIf='r.userName'><a href='/profile/{{r.userName}}'>{{r.name}}</a>
+                <!--<small *ngIf='r.profile.bio'>{{r.profile.bio}}</small>-->
+              </span>
+                <span *ngIf='r.areaOfWork'><a href='http://10.102.55.73:3000/orgs'>{{r.name}}</a></span>
+              </li>
+            </ng-template>
+             
+      
+    </ul>
+      
+
+      
+    </div>
+  </div>
+</form>
+

@@ -1,0 +1,150 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<div id="experience" class="alert " *ngFor="let data of userData ">
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <!--<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog"> -->
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+
+          <h2 class="modal-title"><b>Add Experience</b>
+
+          </h2>
+
+        </div>
+        <div class="modal-body">
+          <form #addExperience="ngForm" name="addExperience" autocomplete="off" (submit)="AddExperience(addExperience.value)" novalidate>
+            <div class="form-group">
+              <h4>
+                <label for="recipient-name" class="form-control-label">Designation</label>
+                <input type="text" class="form-control" name="Designation1" value="" [(ngModel)]='designation1' required ngModel #Designation1='ngModel'>
+                <div class="alert alert-danger" *ngIf="Designation1.touched && Designation1.invalid">Designation is required !!</div>
+              </h4>
+            </div>
+
+            <div class="form-group">
+              <h4>
+                <label for="recipient-name" class="form-control-label">Company Name</label>
+                <input type="text" class="form-control" name="CompanyName1" value="" [(ngModel)]='companyName1' required ngModel #CompanyName1='ngModel'>
+                <div class="alert alert-danger" *ngIf="CompanyName1.touched && CompanyName1.invalid">Company Name is required !!</div>
+              </h4>
+            </div>
+
+            <div class="form-group">
+              <h4>
+                <label for="recipient-name" class="form-control-label">Time period</label>
+                <input type="text" class="form-control" name="TimePeriod1" value="" [(ngModel)]='timePeriod1' required ngModel #TimePeriod1='ngModel'>
+                <div class="alert alert-danger" *ngIf="TimePeriod1.touched && TimePeriod1.invalid">Time Period is required !!</div>
+              </h4>
+            </div>
+
+          </form>
+        </div>
+
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-success" data-dismiss="modal"  (click)="addExpereinceDatabase(addExperience,Designation1.value,CompanyName1.value,TimePeriod1.value)">Save</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <h3 class="card-header">
+      Experience
+      <a data-toggle="collapse" href="#bodyExp" class="btn pull-right">
+         <span class="glyphicon glyphicon-th-list"></span>
+      </a>
+
+      <span><a href="#myModal" data-target="#myModal" class="btn btn-default btn-sm" class="btn pull-right" data-toggle="modal">
+          <span class="glyphicon glyphicon-plus" *ngIf="this.auth.getUser() == userData[0].userName"></span></a>
+      </span>
+    </h3>
+    <div id="bodyExp" class="card-body"  class="collapse">
+      <p>
+        <a href="#">
+          <!--<img id="companyLogo" border="0" src="./assets/Koala.jpg" width="100" height="100">-->
+        </a>
+      </p>
+      <div id="cname">
+
+        <div class="modal fade" id="myModaleditExp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <!--<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog"> -->
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header" style="padding:35px 50px;">
+
+                <h2 class="modal-title"><b>Update Experience</b>
+
+                </h2>
+
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Designation</label>
+                      <input type="text" class="form-control" name="des" [(ngModel)]='designation' required ngModel #Designation='ngModel'>
+                      <div class="alert alert-danger" *ngIf="Designation.touched && Designation.invalid">Designation is required !!</div>
+                    </h4>
+                  </div>
+
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Company Name</label>
+                      <input type="text" class="form-control" name="CompanyName" [(ngModel)]='companyName' required ngModel #CompanyName='ngModel'>
+                      <div class="alert alert-danger" *ngIf="CompanyName.touched && CompanyName.invalid">Company Name is required !!</div>
+                    </h4>
+                  </div>
+
+                  <div class="form-group">
+                    <h4>
+                      <label for="recipient-name" class="form-control-label">Time period</label>
+                      <input type="text" class="form-control" name="TimePeriod" [(ngModel)]='timePeriod' required ngModel #TimePeriod='ngModel'>
+                      <div class="alert alert-danger" *ngIf="TimePeriod.touched && TimePeriod.invalid">Time Period is required !!</div>
+                    </h4>
+                  </div>
+
+                </form>
+              </div>
+
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="updateExperienceDatabase(Designation.value,CompanyName.value,TimePeriod.value)">Save Changes</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+              </div>
+
+
+            </div>
+
+          </div>
+        </div>
+        <!--<span class="visually-hidden">designation</span>-->
+        <div *ngIf="userData.length">
+          <div *ngFor="let index of userData[0].profile.experience.reverse()">
+            <span><h4>Designation :  {{index.designation}}</h4></span><span><button class="btn btn-danger btn-sm" *ngIf="this.auth.getUser() == userData[0].userName" class="btn pull-right" (click)=removeExperience(index.experienceId)><span class="glyphicon glyphicon-trash"> </span></button>
+            </span>
+            <span>
+          <button type="button" *ngIf="this.auth.getUser() == userData[0].userName" data-target="#myModaleditExp" class="btn btn-default btn-sm" class="btn pull-right" data-toggle="modal" (click)="updateExperience(index.experienceId)">
+          <span class="glyphicon glyphicon-pencil" ></span>
+            </button>
+            </span>&nbsp;
+            
+            <span><h4>Company :  {{index.companyName}}</h4></span>
+            <span><h4>Time Period : {{index.timePeriod}}</h4></span>
+            <hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+<head>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+
+<div class="alert ">
+
+  <div class="card">
+    <h3 class="card-header">Endorsement
+      <a data-toggle="collapse" href="#bodyEndorse" class="btn pull-right">
+         <span class="glyphicon glyphicon-th-list"></span>
+      </a>
+      <span *ngIf="this.auth.getUser() != userData[0].userName"><a href="#myModalEndorse" class="btn btn-default btn-sm" class="btn pull-right" data-toggle="modal">
+          <span class="glyphicon glyphicon-plus" ></span></a>
+      </span>
+    </h3>
+
+
+    <div id="endorsement" id="bodyEndorse" class="card-body" class="collapse">
+      <div id="endname">
+
+        <div *ngIf="userData.length">
+          <div *ngFor="let data of userData[0].profile.endorsements.reverse()">
+            <span><h4>Endorsed By : {{data.endorsedBy}} </h4></span>
+            <span><h4>Comment : {{data.comment}} </h4></span>
+            <hr/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModalEndorse" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header" style="padding:35px 50px;">
+
+          <h2 class="modal-title"><b>Add Endorsement</b>
+
+          </h2>
+
+        </div>
+      <div class="modal-body">
+        <form  #addEndorsement="ngForm" >
+          <!-- <div class="form-group">
+            <h4>
+              <label for="recipient-name" class="form-control-label">Endorsed By
+              </label>
+              <input type="text" class="form-control" name="endName1" [(ngModel)]='endorsedName1' #EndorsedName1='ngModel'>
+            </h4>
+          </div> -->
+
+          <div class="form-group">
+            <h4>
+              <label for="recipient-name" class="form-control-label">Comment</label>
+              <input type="text" class="form-control" name="endComment1" [(ngModel)]='endorsedComment1' #EndorsedComment1='ngModel'>
+            </h4>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-success" data-dismiss="modal" (click)="addEndorsementDatabase(addEndorsement,EndorsedName1.value,EndorsedComment1.value)">Save</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
